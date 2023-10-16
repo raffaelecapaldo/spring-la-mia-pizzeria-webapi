@@ -97,7 +97,6 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner  {
 		userService.save(normalUser);
 		userService.save(adminUser);
 
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaa" + PathRequest.toStaticResources().toString());
 
 
 

@@ -45,7 +45,7 @@ public class PizzaController {
 	@GetMapping("/{id}")
 	public String getShow(@PathVariable int id, Model model) {
 		
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 		model.addAttribute("pizza", pizza);
 		
 		return "pizza/pizza-show";
@@ -75,7 +75,7 @@ public class PizzaController {
 	
 	@GetMapping("/update/{id}")
 	public String getPizzaUpdate(@PathVariable int id, Model model) {
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 		pizza.setPrice((pizza.getPrice() / 10000));
 		model.addAttribute("pizza", pizza);
 		model.addAttribute("ingredients", ingredientService.findAll());
@@ -86,7 +86,7 @@ public class PizzaController {
 	
 	@PostMapping("/delete/{id}")
 	public String deletePizza(@PathVariable int id, RedirectAttributes ra) {
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 		//Cancello le offerte di questa pizza per evitare errori nel DB
 		pizzaService.deleteAllOffers(pizza);
 		ra.addFlashAttribute("deleteMessage", "Pizza con ID: " + pizza.getId() + " (" + pizza.getName() + ") cancellata");

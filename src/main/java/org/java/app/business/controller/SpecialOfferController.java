@@ -28,7 +28,7 @@ public class SpecialOfferController {
 	
 	private String saveOffer(SpecialOffer specialOffer, BindingResult bindingResult, Model model,
 			int pizzaId, RedirectAttributes ra, boolean isNew) {
-		Pizza pizza = pizzaService.findById(pizzaId);
+		Pizza pizza = pizzaService.findById(pizzaId).get();
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pizza", pizza); //per titolo pagina
@@ -49,7 +49,7 @@ public class SpecialOfferController {
 	
 	@GetMapping("/{id}/addOffer")
 	public String getOfferCreateForm(@PathVariable int id, Model model) {
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 		model.addAttribute("pizza", pizza);
 		model.addAttribute("specialOffer", new SpecialOffer());
 		
@@ -59,7 +59,7 @@ public class SpecialOfferController {
 	@GetMapping("/{pizza_id}/editOffer/{id}")
 	public String getOfferEditForm(@PathVariable int id, @PathVariable("pizza_id") int pizzaId,
 			Model model) {
-		Pizza pizza = pizzaService.findById(pizzaId);
+		Pizza pizza = pizzaService.findById(pizzaId).get();
 		SpecialOffer specialOffer = specialOfferService.findById(id);
 		model.addAttribute("pizza", pizza);
 		model.addAttribute("specialOffer", specialOffer);

@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
+import org.java.app.business.api.PizzaDTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.annotation.Nullable;
@@ -65,6 +67,16 @@ public class Pizza {
 		setPrice(price);
 		setIngredients(Arrays.asList(ingredients));
 	}
+	
+	//costruttore da DTO
+	
+	public Pizza(PizzaDTO pizzaDTO) {
+		setName(pizzaDTO.getName());
+		setDescription(pizzaDTO.getDescription());
+		setImageUrl(pizzaDTO.getImageUrl());
+		setPrice(pizzaDTO.getPrice());
+	}
+	
 	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -108,11 +120,26 @@ public class Pizza {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	
+	@JsonIgnore
 	public float getPrice() {
 		return price;
 	}
 	public void setPrice(float price) {
 		this.price = price*100;
+	}
+	
+	public float getApiPrice() {
+		return getPrice()/100;
+	}
+	
+	//Settato per modificare anche solo un campo con l'update
+	public void fillFromPizzaDto(PizzaDTO pizzaDTO) {
+		setName(pizzaDTO.getName() != null ? pizzaDTO.getName() : getName());
+		setDescription(pizzaDTO.getDescription() != null ? pizzaDTO.getDescription() : getDescription());
+		setImageUrl(pizzaDTO.getImageUrl() != null ? pizzaDTO.getImageUrl() : getImageUrl());
+		setPrice(pizzaDTO.getPrice() != 0.0 ? pizzaDTO.getPrice() : getPrice());
+
 	}
 	
 	@Override
