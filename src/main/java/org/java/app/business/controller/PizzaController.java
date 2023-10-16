@@ -1,6 +1,7 @@
 package org.java.app.business.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.java.app.business.db.pojo.Pizza;
 import org.java.app.business.db.serv.IngredientService;
@@ -45,7 +46,11 @@ public class PizzaController {
 	@GetMapping("/{id}")
 	public String getShow(@PathVariable int id, Model model) {
 		
-		Pizza pizza = pizzaService.findById(id).get();
+		Optional<Pizza> optPizza = pizzaService.findById(id);
+		if (optPizza.isEmpty()) {
+			return "redirect:/pizzas";
+		}
+		Pizza pizza = optPizza.get();
 		model.addAttribute("pizza", pizza);
 		
 		return "pizza/pizza-show";
@@ -75,7 +80,11 @@ public class PizzaController {
 	
 	@GetMapping("/update/{id}")
 	public String getPizzaUpdate(@PathVariable int id, Model model) {
-		Pizza pizza = pizzaService.findById(id).get();
+		Optional<Pizza> optPizza = pizzaService.findById(id);
+		if (optPizza.isEmpty()) {
+			return "redirect:/pizzas";
+		}
+		Pizza pizza = optPizza.get();
 		pizza.setPrice((pizza.getPrice() / 10000));
 		model.addAttribute("pizza", pizza);
 		model.addAttribute("ingredients", ingredientService.findAll());
@@ -86,7 +95,11 @@ public class PizzaController {
 	
 	@PostMapping("/delete/{id}")
 	public String deletePizza(@PathVariable int id, RedirectAttributes ra) {
-		Pizza pizza = pizzaService.findById(id).get();
+		Optional<Pizza> optPizza = pizzaService.findById(id);
+		if (optPizza.isEmpty()) {
+			return "redirect:/pizzas";
+		}
+		Pizza pizza = optPizza.get();
 		//Cancello le offerte di questa pizza per evitare errori nel DB
 		pizzaService.deleteAllOffers(pizza);
 		ra.addFlashAttribute("deleteMessage", "Pizza con ID: " + pizza.getId() + " (" + pizza.getName() + ") cancellata");
@@ -109,9 +122,9 @@ public class PizzaController {
 			pizzaService.save(pizza);
 			return "redirect:/pizzas/" + pizza.getId();
 
-		}
+		}}
+	
 		
-		
-	}}
+	}
 	
 
