@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +34,7 @@ public class SpecialOffer {
 	private LocalDate endDate;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(nullable = false)
 	private Pizza pizza;
 	

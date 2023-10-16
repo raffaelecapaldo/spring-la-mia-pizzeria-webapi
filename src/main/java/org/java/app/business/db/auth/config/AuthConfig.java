@@ -19,8 +19,7 @@ public class AuthConfig {
 	SecurityFilterChain filterChain(HttpSecurity http)
 		throws Exception {
 			 
-			http.authorizeHttpRequests()
-			
+			http.authorizeHttpRequests()			
 				//ACCESSO RISORSE STATIC
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).hasAuthority("USER")
 		        //PROTEZIONE ROTTE OFFER CON PATHERN SIMIL API
@@ -37,9 +36,10 @@ public class AuthConfig {
 		        .requestMatchers("/ingredients").hasAuthority("USER")
 				.requestMatchers("/pizzas/**").hasAuthority("USER")
 		        .requestMatchers("/ingredients/**").hasAuthority("USER")
-		        .requestMatchers("/").permitAll() //Permetti redirect alla login
+		        .requestMatchers("/**").permitAll() //Permetti redirect alla login
 		        .and().formLogin().defaultSuccessUrl("/pizzas")
-		        .and().logout();
+		        .and().logout(); 
+				http.csrf().disable(); //per API, momentaneo
 			
 			return http.build();
 	}
