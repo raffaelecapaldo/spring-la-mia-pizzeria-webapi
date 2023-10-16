@@ -10,7 +10,7 @@
             <div class="d-flex justify-content-center">
 			<!-- REQUIRED E VALIDAZIONI HTML5 ULTERIORE NON INSERITE PER ESPLICITA VALIDAZIONE BACKEND-ONLY -->
                 <form class="p-4 my-form" method="post" th:object="${ingredient}">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
                         <input type="text" class="form-control" for="name" placeholder="Nome dell'ingrediente" th:field="*{name}" th:classappend="${#fields.hasErrors('name') || nameNotUnique != null ? 'is-invalid': ''}">

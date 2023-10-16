@@ -42,7 +42,7 @@
                      <td >[[*{name}]]</td>
                      <td sec:authorize="hasAuthority('ADMIN')">
                         <form class="delete-form" th:action="@{/ingredients/delete/{id}(id=*{id})}" method="POST">
-                          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                          <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
                         <a class="btn btn-danger delete-button"><i class="fa-regular fa-trash-can"></i></a>  
                        </form>
                     </td>
