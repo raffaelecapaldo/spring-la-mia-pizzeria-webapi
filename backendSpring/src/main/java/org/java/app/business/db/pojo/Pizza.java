@@ -138,7 +138,7 @@ public class Pizza {
 		setName(pizzaDTO.getName() != null ? pizzaDTO.getName() : getName());
 		setDescription(pizzaDTO.getDescription() != null ? pizzaDTO.getDescription() : getDescription());
 		setImageUrl(pizzaDTO.getImageUrl() != null ? pizzaDTO.getImageUrl() : getImageUrl());
-		setPrice(pizzaDTO.getPrice() != 0.0 ? pizzaDTO.getPrice() : getPrice());
+		setPrice(pizzaDTO.getPrice() != 0.0 ? pizzaDTO.getPrice() : getApiPrice());
 
 	}
 	
