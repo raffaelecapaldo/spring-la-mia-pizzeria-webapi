@@ -55,11 +55,11 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner  {
 		ingredientService.save(wurstel);
 
 		
-		Pizza pizza1 = new Pizza("Margherita", "La pizza più semplice", "/images/pizza-margherita.jpg", 4.50f, pomodoro, mozzarella);
-		Pizza pizza2 = new Pizza("Capricciosa", "Ogni sfizio è un capriccio", "/images/pizza-capricciosa.jpg", 8.50f, pomodoro, mozzarella);
-		Pizza pizza3 = new Pizza("Marinara", "Per stare leggero", "/images/pizza-marinara.jpg", 6f, pomodoro);
-		Pizza pizza4 = new Pizza("Napoli", "Con le acciughe fresche", "/images/pizza-napoli.webp", 8f, pomodoro, acciughe);
-		Pizza pizza5 = new Pizza("Wurstel e patatine", "Per tutte le età", "/images/pizza-wurstel.jpg", 5.50f, wurstel);
+		Pizza pizza1 = new Pizza("Margherita", "La pizza più semplice", "http://localhost:8080/images/pizza-margherita.jpg", 4.50f, pomodoro, mozzarella);
+		Pizza pizza2 = new Pizza("Capricciosa", "Ogni sfizio è un capriccio", "http://localhost:8080/images/pizza-capricciosa.jpg", 8.50f, pomodoro, mozzarella);
+		Pizza pizza3 = new Pizza("Marinara", "Per stare leggero", "http://localhost:8080/images/pizza-marinara.jpg", 6f, pomodoro);
+		Pizza pizza4 = new Pizza("Napoli", "Con le acciughe fresche", "http://localhost:8080/images/pizza-napoli.webp", 8f, pomodoro, acciughe);
+		Pizza pizza5 = new Pizza("Wurstel e patatine", "Per tutte le età", "http://localhost:8080/images/pizza-wurstel.jpg", 5.50f, wurstel);
 
 		pizzaService.save(pizza1);
 		pizzaService.save(pizza2);

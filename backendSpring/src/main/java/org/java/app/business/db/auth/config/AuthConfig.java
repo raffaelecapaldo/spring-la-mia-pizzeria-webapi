@@ -2,6 +2,7 @@ package org.java.app.business.db.auth.config;
 
 import org.java.app.business.db.auth.serv.UserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,9 +11,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class AuthConfig {
+	
+	 @Bean
+	  public FilterRegistrationBean corsFilter() {
+	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(true);
+	    config.addAllowedOrigin("http://localhost:5173"); 
+	    config.addAllowedHeader("*");
+	    config.addAllowedMethod("*");
+	    source.registerCorsConfiguration("/**", config);
+	    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+	    bean.setOrder(0);
+	    return bean;
+	  }
+
 
 	@SuppressWarnings("removal")
 	@Bean
@@ -40,9 +59,13 @@ public class AuthConfig {
 		        .and().formLogin().defaultSuccessUrl("/pizzas")
 		        .and().logout(); 
 				http.csrf().disable(); //per API, momentaneo
+				
+				
 			
 			return http.build();
 	}
+	
+	
 	
 	@Bean
 	UserService userDetailsService() {
@@ -64,4 +87,8 @@ public class AuthConfig {
    
       return authProvider;
     }
+    
+    
+    
+    
 }
