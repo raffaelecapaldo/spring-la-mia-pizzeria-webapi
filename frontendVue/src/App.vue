@@ -91,6 +91,7 @@
             <div class="mb-3 d-flex">
               <button type="submit"
                 class="btn btn-primary me-2">{{ pizzaToSend.id == null ? "Crea" : "Modifica" }}</button>
+                <a class="btn btn-secondary" @click.prevent="resetForm()">Reset</a>    
             </div>
           </form>
         </div>
@@ -206,6 +207,11 @@ export default {
           console.log(e)
         })
 
+    },
+    resetForm() {
+      const idToPreserve = this.pizzaToSend.id
+      this.pizzaToSend = { ...this.emptyPizza }
+      this.pizzaToSend.id = idToPreserve
     }
   },
   mounted() {
