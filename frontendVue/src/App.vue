@@ -7,14 +7,14 @@
   </header>
   <main>
     <div class="d-flex justify-content-center">
-      <form id="search">
+      <form @submit.prevent="getPizzas()" id="search">
         <div class="input-group mb-3">
-          <input name="name" type="text" th:value="${name}" class="form-control" placeholder="Trova una pizza">
-          <button class="btn btn-danger" type="submit">Cerca</button>
+          <input name="name" type="text" v-model="queryName" class="form-control" placeholder="Trova una pizza">
+          <button class="btn btn-danger" type="submit" >Cerca</button>
         </div>
       </form>
     </div>
-    <div class="row">
+    <div v-if="!noPizzas" class="row">
       <div v-for="pizza in pizzas" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center mb-3">
         <div class="card" style="width: 18rem;">
           <img
@@ -33,6 +33,11 @@
         </div>
       </div>
     </div>
+    <div v-else class="d-flex justify-content-center">
+    <div class="alert alert-warning" role="alert">
+      Pizze non trovate
+</div>
+</div>
   </main>
 </template>
 
@@ -44,24 +49,28 @@ export default {
     return {
       STORAGE: "http://localhost:8080",
       API_URL: "http://localhost:8080/api/v1/pizzas",
-      pizzas: null
-
+      pizzas: null,
+      queryName: "",
+      noPizzas: false
     }
   },
   methods: {
-    getAllPizzas() {
-      axios.get(this.API_URL)
+    getPizzas() {
+      axios.get(this.API_URL, {params: 
+      {q: this.queryName}
+    })
         .then((res) => {
+          this.noPizzas = false
           this.pizzas = res.data
         })
         .catch((e) => {
-          console.log(e)
+          this.noPizzas = true
         })
 
     }
   },
   mounted() {
-    this.getAllPizzas()
+    this.getPizzas()
   }
 }
 </script>

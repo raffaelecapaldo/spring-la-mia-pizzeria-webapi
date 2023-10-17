@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,11 +32,11 @@ public class PizzaRestController {
 	
 	@GetMapping
 	@ResponseBody
-	public ResponseEntity<List<Pizza>> getAllorSearch(String name) {
+	public ResponseEntity<List<Pizza>> getAllorSearch(@RequestParam(required = false, name = "q") String query) {
 		
-		List<Pizza> pizzas = name == null ?
+		List<Pizza> pizzas = query == null ?
 				 pizzaService.findAll():
-				 pizzaService.findByName(name);
+				 pizzaService.findByName(query);
 		
 		if (pizzas.size() < 1) 
 			 return new ResponseEntity<List<Pizza>>(HttpStatus.NOT_FOUND);
