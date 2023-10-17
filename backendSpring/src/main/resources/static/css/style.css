@@ -47,10 +47,7 @@ body {
     border:2px white solid;
 }
 
-#add-button {
-    top: 13px;
-    right: 10px;
-}
+
 
 .delete-form {
 	display:inline-block;

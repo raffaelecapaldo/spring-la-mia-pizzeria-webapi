@@ -21,7 +21,7 @@ public class AuthConfig {
 			 
 			http.authorizeHttpRequests()			
 				//ACCESSO RISORSE STATIC
-				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).hasAuthority("USER")
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 		        //PROTEZIONE ROTTE OFFER CON PATHERN SIMIL API
 		        .requestMatchers(new AntPathRequestMatcher("/**/addOffer")).hasAuthority("ADMIN")
 		        .requestMatchers(new AntPathRequestMatcher("/**/editOffer/**")).hasAuthority("ADMIN")
