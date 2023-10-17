@@ -26,9 +26,7 @@
             <p class="card-text">{{ pizza.description }}</p>
             <p class="card-text">{{ "Prezzo: " + pizza.apiPrice.toFixed(2).replace('.', ',') + "&euro;" }}</p>
             <a class="btn btn-info me-2"><i class="fa-solid fa-pencil"></i></a>
-            <form class="delete-form" method="POST">
-              <a class="btn btn-danger delete-button"><i class="fa-regular fa-trash-can"></i></a>
-            </form>
+              <a @click="startDeletePizza(pizza)" class="btn btn-danger delete-button"><i class="fa-regular fa-trash-can"></i></a>
           </div>
         </div>
       </div>
@@ -39,10 +37,30 @@
 </div>
 </div>
   </main>
+
+  <!-- Modale -->
+  <div v-if="eliminating" class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Eliminazione pizza</h1>
+        <button @click="eliminating = false" type="button" class="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        Cancellare la pizza <b>{{ pizzaToDelete.name }}</b> con ID <b>{{ pizzaToDelete.id }}</b>?
+      </div>
+      <div class="modal-footer">
+        <button @click="deletePizza(pizzaToDelete.id)" class="btn btn-danger">Cancella</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div v-if="eliminating" class="modal-backdrop fade show"></div>
 </template>
 
 <script>
 import axios from 'axios';
+import { useToast } from "vue-toastification";
 
 export default {
   data() {
@@ -51,7 +69,10 @@ export default {
       API_URL: "http://localhost:8080/api/v1/pizzas",
       pizzas: null,
       queryName: "",
-      noPizzas: false
+      noPizzas: false,
+      eliminating: false,
+      pizzaToDelete: null,
+      toast: useToast()
     }
   },
   methods: {
@@ -66,6 +87,25 @@ export default {
         .catch((e) => {
           this.noPizzas = true
         })
+
+    },
+    startDeletePizza(pizza) {
+        this.eliminating = true
+        this.pizzaToDelete = pizza
+    },
+    deletePizza(id) {
+      axios.delete(this.API_URL + "/" + id)
+      .then((res) => {
+        this.toast.success("Pizza eliminata!", {
+        timeout: 2000
+      });
+        this.eliminating = false
+        this.pizzaToDelete = null
+        this.getPizzas();
+      })
+      .catch((e) => {
+        console.log(e)
+      })
 
     }
   },
